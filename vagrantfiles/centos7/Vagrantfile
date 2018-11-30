@@ -8,12 +8,12 @@ Vagrant.configure(2) do |config|
   NodeCount = 1
 
   (1..NodeCount).each do |i|
-    config.vm.define "cenvm0#{i}" do |node|
+    config.vm.define "centosvm0#{i}" do |node|
       node.vm.box = "centos/7"
-      node.vm.hostname = "cenvm0#{i}.example.com"
+      node.vm.hostname = "centosvm0#{i}.example.com"
       node.vm.network "private_network", ip: "172.42.42.10#{i}"
       node.vm.provider "virtualbox" do |v|
-        v.name = "cenvm0#{i}"
+        v.name = "centosvm0#{i}"
         v.memory = 2048
         v.cpus = 1
       end
