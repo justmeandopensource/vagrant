@@ -1,0 +1,35 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+
+Vagrant.configure(2) do |config|
+
+  config.vm.provision "shell", path: "bootstrap.sh"
+
+  # Perforce Master Server
+  config.vm.define "p4server" do |p4server|
+    p4server.vm.box = "centos/7"
+    p4server.vm.hostname = "p4server.example.com"
+    p4server.vm.network "private_network", ip: "172.42.42.111"
+    p4server.vm.provider "virtualbox" do |v|
+      v.name = "p4server"
+      v.memory = 1024
+      v.cpus = 1
+    end
+    p4server.vm.provision "shell", path: "bootstrap_p4server.sh"
+  end
+
+  # Just another machine with p4 binary
+  config.vm.define "p4client" do |p4client|
+    p4client.vm.box = "centos/7"
+    p4client.vm.hostname = "p4client.example.com"
+    p4client.vm.network "private_network", ip: "172.42.42.112"
+    p4client.vm.provider "virtualbox" do |v|
+      v.name = "p4client"
+      v.memory = 512
+      v.cpus = 1
+    end
+  end
+
+end
