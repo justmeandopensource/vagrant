@@ -13,7 +13,7 @@ echo "admin" | passwd --stdin root >/dev/null 2>&1
 echo "Set up local user account"
 useradd -m -s /bin/bash venkatn
 echo "admin" | passwd --stdin venkatn >/dev/null 2>&1
-echo "venkatn ALL=(ALL) NOPASWD: ALL" >> /etc/sudoers
+echo "venkatn ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Update bashrc file
 echo "export TERM=xterm" >> /etc/bashrc
