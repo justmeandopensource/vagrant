@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
 
   (1..NodeCount).each do |i|
     config.vm.define "node#{i}" do |node|
-      node.vm.box = "gentoo/ubuntu2004"
+      node.vm.box = "generic/ubuntu2004"
       node.vm.hostname = "node#{i}.example.com"
       node.vm.network "private_network", ip: "172.16.16.10#{i}"
       node.vm.provider "virtualbox" do |v|
