@@ -1,0 +1,19 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
+
+Vagrant.configure(2) do |config|
+
+  # Kubernetes Master Server
+  config.vm.define "arch" do |arch|
+    arch.vm.box = "archlinux/archlinux"
+    arch.vm.hostname = "arch.example.com"
+    arch.vm.provider :libvirt do |v|
+      v.memory = 2048
+      v.cpus = 2
+    end
+    arch.vm.provision "shell", path: "bootstrap.sh"
+  end
+
+end
