@@ -7,19 +7,33 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", path: "bootstrap.sh"
 
-  NodeCount = 1
+  NodeCount = 2
 
   (1..NodeCount).each do |i|
-    config.vm.define "ubuntuvm0#{i}" do |node|
-      node.vm.box = "bento/ubuntu-20.04"
-      node.vm.hostname = "ubuntuvm0#{i}.example.com"
+
+    config.vm.define "ubuntuvm#{i}" do |node|
+
+      node.vm.box               = "generic/ubuntu2004"
+      node.vm.box_check_update  = false
+      node.vm.box_version       = "3.2.18"
+      node.vm.hostname          = "ubuntuvm#{i}.example.com"
+
       node.vm.network "private_network", ip: "172.16.16.10#{i}"
-      node.vm.provider "virtualbox" do |v|
-        v.name = "ubuntuvm0#{i}"
-        v.memory = 2048
-        v.cpus = 2
+
+      node.vm.provider :virtualbox do |v|
+        v.name    = "ubuntuvm#{i}"
+        v.memory  = 1024
+        v.cpus    = 1
       end
+
+      node.vm.provider :libvirt do |v|
+        v.nested  = true
+        v.memory  = 1024
+        v.cpus    = 1
+      end
+
     end
+
   end
 
 end
